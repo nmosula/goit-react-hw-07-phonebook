@@ -1,9 +1,10 @@
+import * as Yup from 'yup';
+import Notiflix from 'notiflix';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContactsItems } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import { Formik, Field } from 'formik';
 import { Form, FormField, ErrorMessage, FrmButton } from './UserForm.styled';
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact, getContactsItems } from 'redux/contactsSlice';
-import Notiflix from 'notiflix';
 
 
 const nameRegex = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
@@ -13,7 +14,7 @@ const UserSchema = Yup.object().shape({
     name: Yup.string()
         .matches(nameRegex, {message: "Invalid name", })
         .required('Required'),
-    number: Yup.string()
+    phone: Yup.string()
         .matches(numberRegex, {message: "Invalid number. For example '123-45-67'", })
         .required('Required')
 });
@@ -21,14 +22,14 @@ const UserSchema = Yup.object().shape({
 
 const UserForm = () => {
     const dispatch = useDispatch();
-    const contactsItems = useSelector(getContactsItems);
+    const contactsItems = useSelector(selectContactsItems);
 
     
     return (
         <Formik
             initialValues={{
                 name: '',
-                number: '',
+                phone: '',
             }}
             validationSchema={UserSchema}
             onSubmit={(data, actions) => {
@@ -50,8 +51,8 @@ const UserForm = () => {
                 </FormField>
                 <FormField>
                     Tel
-                    <Field name="number" />
-                    <ErrorMessage name="number" component="span" />
+                    <Field name="phone" />
+                    <ErrorMessage name="phone" component="span" />
                 </FormField>
                 <FrmButton type="submit">Add Contact</FrmButton>
             </Form>

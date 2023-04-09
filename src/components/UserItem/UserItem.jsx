@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Item, FrmButton } from './UserItem.styled';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 import Notiflix from 'notiflix';
 
 function UserItem({ item }) {
@@ -9,9 +9,9 @@ function UserItem({ item }) {
 
     return (
         <Item key={item.id}>
-            {item.name}: {item.number}
+            {item.name}: {item.phone}
             <FrmButton onClick={() => {
-                    dispatch(deleteContact({ id: item.id }));
+                    dispatch(deleteContact(item.id));
                     Notiflix.Notify.info(`Контакт ${item.name} видалений з контактів`);
                 }
             }

@@ -1,22 +1,20 @@
 import UserItem from 'components/UserItem/UserItem';
-import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getContactsItems } from 'redux/contactsSlice';
-import { getFilterValue } from 'redux/filterSlice';
+import { selectContactsItems } from 'redux/contactsSlice';
+import { selectFilterValue } from 'redux/filterSlice';
 
 function UserList () {
 
-  const contacts = useSelector(getContactsItems);
-  const filterValue = useSelector(getFilterValue);
+  const contacts = useSelector(selectContactsItems);
+  const filterValue = useSelector(selectFilterValue);
+ 
+  const getFilteredContacts = (contacts, filterValue) => {
+    return contacts.filter(item =>
+      item.name.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  }
 
-  const getFilteredContacts = useMemo(() => () => {
-    const normalizedFilter = filterValue.toLowerCase().trim();
-  
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter)); 
-  },
-  [contacts, filterValue]);
-
-  const filteredContacts = getFilteredContacts();
+  const filteredContacts = getFilteredContacts(contacts, filterValue);
   
     return (
         <>

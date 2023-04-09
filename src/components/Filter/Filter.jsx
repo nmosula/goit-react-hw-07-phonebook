@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter, getFilterValue } from 'redux/filterSlice';
+import { setFilter, selectFilterValue } from 'redux/filterSlice';
 import { FrmLabel, FrmInput } from './Filter.styled';
 
 function Filter() {
 
   const dispatch = useDispatch();
-  const filterValue = useSelector(getFilterValue);
+  const filterValue = useSelector(selectFilterValue);
 
   return (
     <FrmLabel>
